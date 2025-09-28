@@ -1,0 +1,81 @@
+Problema
+Oportunidad
+Necesidad
+
+1.definir el proposito, el beneficio que va a traer el proyecto, para que(del cambio se va a realizar) , por que
+2.Identificar a todos los involucrados y todos aquellos que estan dentro del proyecto(investigar, se trata del equipo, por ahora 1)
+3.Recolectar todos los requerimientos, llamadas en SCRUM "historias de usuario"
+4.Se va a priorizar con base al proposito(los requerimientos)
+se divide por:
+	quien me lo esta pidiendo
+	cual es el impacto del proyecto
+	cual es el impacto del proposito
+	Vision -> Solución
+5.Estimar el esfuerzo que va a llevar el proyecto(recursos como personas, dinero, tiempo, etc)
+6.Recomendado planear o dividir estos requerimientos en entregables cortos
+7.Se ejecuta, mide, analiza y adapta
+
+TIP:
+Analizar: forma de trabajo, velocidad, forma de colaboracion, comunicacion, nivel de satisfaccion de los involucrados(para adaptar cada ciclo)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+METODOLOGIAS
+1.CASCADA: se divide el proyecto en fases(fase 1, fase 2, fase3, etc)(NO RECOMENDABLE)
+2.AGILE: divide el proceso en pequeños bloques
+
+-------
+Herramientas Notion(excalidraw),noticon calendar, obsidian
+
+1.Entender los requerimientos del cliente, hacer las preguntas adecuadas tomando notas para crear el sistema o plantear una solucion viable, reunion con el cliente para explicar el producto o servicio que se resolvera con la app/desarrollo, para tener más dudas y agregar más funcionalidades o replanetar cosas que tomamos en cuenta, para tomar las expectativas del cliente y el tiempo de desarrollo 
+
+2.Diseño de las bases del sistema, base de datos modelo de entidad relacion para verificar el diagrama basico así ver como funciona el sistema(DB diagram.io), diseñar un sistema y escoger las tecnologias heramientas del bakcend, frontend, servicios de la nube(eraser.io), 
+Luego diseñar las interfaces graficas para crear bocetos basicos de la app, para tener la idea más clara(para desarrollar lo más antes posible)
+
+3.Creación del entorno de desarrollo, definir repositorios en github, 
+
+Herramientas utiles tailwind, chat c y, v0.dev
+
+4.Creacion del entorno de produccion, subir el proyecto a un servidor, tener un dominio, para que el cliente lo pruebe(servicios de nube como PaaS, Vercel, Render, railway, otra alternativa sería VPS HOSTING(servicio de la nube), google cloud, aws, azure(se paga por 1 servidor y se sube todo el proyecto ahi)
+
+
+
+
+
+
+
+
+Activar ENV:
+.\venv\Scripts\activate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

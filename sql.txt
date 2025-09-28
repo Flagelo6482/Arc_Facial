@@ -1,0 +1,3 @@
+user: postgres
+contra: 1234
+puerto: 5432
