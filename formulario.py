@@ -55,7 +55,7 @@ class FormularioRegistro:
         def al_hacer_click(event, entry_widget, placeholder):
             if entry_widget.get() == placeholder:
                 entry_widget.delete(0, "end")
-                entry_widget.config(fg='black')
+                entry_widget.config(fg='grey')
 
         def al_hacer_salir(event, entry_widget, placeholder):
             if not entry_widget.get():
@@ -88,7 +88,7 @@ class FormularioRegistro:
         label_nombres = tk.Label(formulario_frame, text="Nombres: ",
                                  bg="midnight blue", fg="white", font=("Arial", 15, "bold"))
         label_nombres.grid(row=2, column=0, sticky="w", padx=10, pady=20)
-        entry_nombres = tk.Entry(formulario_frame, font=("Arial", 15), width=30)
+        entry_nombres = tk.Entry(formulario_frame, font=("Arial", 15), width=30, fg="grey")
         entry_nombres.grid(row=2, column=1, sticky="w", pady=20)
         placeholder_text_nombres = "Ingresar nombres"
         entry_nombres.insert(0, placeholder_text_nombres)
@@ -99,7 +99,7 @@ class FormularioRegistro:
         labe_apellidos = tk.Label(formulario_frame, text="Apellidos: ",
                                   bg="midnight blue", fg="white", font=("Arial", 15, "bold"))
         labe_apellidos.grid(row=3, column=0, sticky="w", padx=10, pady=5)
-        entry_apellidos = tk.Entry(formulario_frame, font=("Arial", 15), width=30)
+        entry_apellidos = tk.Entry(formulario_frame, font=("Arial", 15), width=30, fg="grey")
         entry_apellidos.grid(row=3, column=1, sticky="w", pady=20)
         placeholder_text_apellidos = "Ingresar apellidos"
         entry_apellidos.insert(0, placeholder_text_apellidos)
@@ -110,7 +110,7 @@ class FormularioRegistro:
         label_numero = tk.Label(formulario_frame, text="Número de contacto:",
                                 bg="midnight blue", fg="white", font=("Arial", 15, "bold"))
         label_numero.grid(row=4, column=0, sticky="w", padx=10, pady=5)
-        entry_numero = tk.Entry(formulario_frame, font=("Arial", 15), width=30)
+        entry_numero = tk.Entry(formulario_frame, font=("Arial", 15), width=30, fg="grey")
         entry_numero.grid(row=4, column=1, sticky="w", pady=20)
         placeholder_text_numero = "Ingrese su número de contacto"
         entry_numero.insert(0, placeholder_text_numero)
@@ -121,7 +121,7 @@ class FormularioRegistro:
         label_correo = tk.Label(formulario_frame, text="Correo electrónico:",
                                 bg="midnight blue", fg="white", font=("Arial", 15, "bold"))
         label_correo.grid(row=5, column=0, sticky="w", padx=10, pady=5)
-        entry_correo = tk.Entry(formulario_frame, font=("Arial", 15), width=30)
+        entry_correo = tk.Entry(formulario_frame, font=("Arial", 15), width=30, fg="grey")
         entry_correo.grid(row=5, column=1, sticky="w", pady=20)
         placeholder_text_correo = "Ingrese su correo electrónico"
         entry_correo.insert(0, placeholder_text_correo)
@@ -132,7 +132,7 @@ class FormularioRegistro:
         label_usuario = tk.Label(formulario_frame, text="Nombre de usuario:",
                                  bg="midnight blue", fg="white", font=("Arial", 15, "bold"))
         label_usuario.grid(row=6, column=0, sticky="w", padx=10, pady=5)
-        entry_usuario = tk.Entry(formulario_frame, font=("Arial", 15), width=30)
+        entry_usuario = tk.Entry(formulario_frame, font=("Arial", 15), width=30, fg="grey")
         entry_usuario.grid(row=6, column=1, sticky="w", pady=20)
         placeholder_text_usuario = "Ingrese un nombre de usuario"
         entry_usuario.insert(0, placeholder_text_usuario)
@@ -144,7 +144,7 @@ class FormularioRegistro:
         label_contrasena = tk.Label(formulario_frame, text="Contraseña",
                                  bg="midnight blue", fg="white", font=("Arial", 15, "bold"))
         label_contrasena.grid(row=7, column=0, sticky="w", padx=10, pady=5)
-        entry_contrasena = tk.Entry(formulario_frame, font=("Arial", 15), width=30)
+        entry_contrasena = tk.Entry(formulario_frame, font=("Arial", 15), width=30, fg="grey")
         entry_contrasena.grid(row=7, column=1, sticky="w", pady=20)
         placeholder_text_contrasena = "Ingrese una nueva contraseña"
         entry_contrasena.insert(0, placeholder_text_contrasena)
@@ -165,111 +165,82 @@ class FormularioRegistro:
         
 
 
+        """Función para validar si un Entry está vacío o no fue rellenado(por defecto tiene el placeholder)
+        """
+        def validar_entry_vacio(dic_entry, dic_place):
+            """Función que valida si los Entry estan vacios o son iguales al placeholder
 
-        #Validamos que contengan caracteres los campos indicados(nombres, apellidos y usuario)
-        def solo_caracteres(texto):
+            Args:
+                dic_entry (_type_): Diccionario de los Entry para obtener sus valores
+                dic_place (_type_): Diccionario de los placeholder que contienen sus valores 
             """
-            Validamos que contengan solo caracteres
+            "Aca almacenaremos los campos que no fueron rellenados"
+            campos_invalidos = []
+
+            """Realizaremos un bucle para comprobar que entry esta vacio o no fue rellenado
+            
+            nombre_campo -> "Nombres"(string)
+            entry -> entry_nombre(objeto Entry que contiene el placeholder)
             """
-            # Expresión regular que permite:
-            # ^ : Inicio de la cadena
-            # [a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+ : Una o más letras, mayúsculas/minúsculas, con tildes, ñ, o espacios en blanco.
-            # $ : Fin de la cadena
-            patron = re.compile(r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$")
-            return bool(patron.match(texto))
+            for nombre_campo, entry in dic_entry.items():
+                """Aca tendremos el valor del primer placeholder que tengamos para compararlo"""
+                placeholder = dic_place[nombre_campo]       #Contiene -> "Ingresar nombres"
+                """Aca tendremos el primer valor del entry del diccionario"""
+                valor_actual_entry = entry.get().strip()    #Contiene -> "Ingresar nombres"
+                
 
-        #Validamos multiples entries
-        def validar_entries(entries_dict, placeholders_dict=None):
-            resultados = {}
-            todos_validos = True
+                """
+                Realizamos la comparación si el Entry esta vacio o es igual al placeholder(no se relleno)
+                """
+                if valor_actual_entry == "" or valor_actual_entry == placeholder:
+                    "Si encontramos el campo vacio/con el mismo placeholder, lo agregamos a la lista de campos vacios 'campos_invalidos' para mostrarlo en un mensaje despues"
+                    campos_invalidos.append(nombre_campo)
 
-            #Campos que deben tener solo caracteres
-            campos_solo_caracteres = ["Nombres", "Apellidos", "Usuario"]
+            "Retornamos la lista de los campos vacios para mostrar en un mensaje"
+            return campos_invalidos
 
-            for nombre, entry in entries_dict.items():
-                valor = entry.get().strip()
-                valido = True
-                mensaje_error = ""
+            
 
-                #1.Validar si el valor del entrie es igual al paceholder
-                if placeholders_dict and nombre in placeholders_dict:
-                    placeholder = placeholders_dict[nombre]
-                    #Consideramos si es igual al placeholder o esta vacio
-                    if not valor or valor == placeholder:
-                        valido = False
-                        mensaje_error = f"El campo {nombre} está vacío o tiene el texto por defecto."
-                else:
-                    if not valor:
-                        valido = False
-                        mensaje_error = f"El campo {nombre} está vacío."
-
-                # 2. Validar solo caracteres (si el campo ya es considerado "válido" hasta este punto)
-                if valido and nombre in campos_solo_caracteres:
-                    if not solo_caracteres(valor):
-                        valido = False
-                        mensaje_error = f"El campo {nombre} solo debe contener letras y espacios."
-
-
-                resultados[nombre] = {
-                    "valido": valido,
-                    "valor": valor,
-                    "mensaje": f"{nombre}: {'✓' if valido else '✗'}"
-                }
-
-                if not valido:
-                    todos_validos = False
-            resultados["todos_validos"] = todos_validos
-            return resultados
-        
-        #Función para validar campos vacios
-        def validar():
-            #Validamos los objetos ENTRY
-
-            placeholders = {
+        """
+        Función para validar diferentes tipos de errores en los objetos Entry
+        """
+        def validar_entrys():
+            "Diccionario de los Entry para obtener su valor que tienen en su campo"
+            dict_entry = {
+                "Nombres": entry_nombres,
+                "Apellidos": entry_apellidos,
+                "Numero": entry_numero,    # ✅ CORREGIDO: "Numero"
+                "Correo": entry_correo,
+                "Usuario": entry_usuario,
+                "Contraseña": entry_contrasena
+            }
+            "Diccionario de los placeholder para realizar la comparación con su valor que tienen"
+            dict_placeholder = {
                 "Nombres": "Ingresar nombres",
                 "Apellidos": "Ingresar apellidos",
                 "Numero": "Ingrese su número de contacto",
                 "Correo": "Ingrese su correo electrónico",
                 "Usuario": "Ingrese un nombre de usuario",
-                "Contrasena": "Ingrese una nueva contraseña"
-            }
-            entries = {
-                "Nombres": entry_nombres,
-                "Apellidos": entry_apellidos,
-                "Numero": entry_numero,
-                "Correo": entry_correo,
-                "Usuario": entry_usuario,
-                "Contrasena": entry_contrasena
+                "Contraseña": "Ingrese una nueva contraseña"
             }
 
-            resultados = validar_entries(entries, placeholders)
 
-            if resultados["todos_validos"]:
-                messagebox.showinfo("Éxito", "Todos los campos estan llenos")
+            "Aca almacenaremos los Entry que no fueron rellenados por el usuario, llamando a otra función que verifica si están vacios"
+            campos_invalidos = validar_entry_vacio(dict_entry, dict_placeholder)
+
+
+            "Si la lista de campos vacios encontro algo(si existe 'True') mostarmos los mensajes en una ventan para el usuario"
+            if campos_invalidos:
+                messagebox.showerror("Error", f"Campos inválidos: {', '.join(campos_invalidos)}")
             else:
-                # Encontramos el primer campo inválido y usamos su mensaje de error específico
-                primer_error = None
-                campos_vacios_o_invalidos = []
+                messagebox.showinfo("Éxito", "Todos los campos están correctos!")
 
-                for campo, info in resultados.items():
-                    if campo != "todos_validos" and not info["valido"]:
-                        campos_vacios_o_invalidos.append(campo)
-                        if primer_error is None and "mensaje_error" in info:
-                            primer_error = info["mensaje_error"]
-                
-                # Mostrar un mensaje de error detallado (priorizando el primer error encontrado)
-                if primer_error:
-                    # Mostramos el error específico del primer campo encontrado
-                    messagebox.showerror("Error de Validación", primer_error)
-                else:
-                    # Mensaje genérico si no se capturó un error específico (debería ser raro con la implementación anterior)
-                    messagebox.showerror("Error", f"Uno o más campos son inválidos: {', '.join(campos_vacios_o_invalidos)}")
 
-            
+
+
 
         btn_registrarse = tk.Button(frame_botones, text="Registrarse!",
-                                    font=("Arial", 14), bg="black", fg="white",
-                                    command=validar)
+                                    font=("Arial", 14), bg="black", fg="white", command=validar_entrys)
         btn_registrarse.pack(side="left", padx=(50, 0))  # Espacio a la izquierda
 
 
@@ -280,3 +251,24 @@ class FormularioRegistro:
     def volver_menu_principal(self):
         """Volvemos al menú anterior(principal)"""
         self.aplicacion_principal.mostrar_pantalla("menu_principal")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
