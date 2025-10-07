@@ -1,4 +1,5 @@
 import psycopg2
+import bcrypt
 
 class DBManager:
     def __init__(self, dbname, user, password, host="localhost", port="5432"):
@@ -36,6 +37,51 @@ class DBManager:
             self.cursor.close()
         if self.conn:
             self.conn.close()
+
+    def verificar_credenciales(self, usuario, contrasena_plana):
+        """Buscamos el usuario y verificamos la contraseña hasheada/encriptada
+
+        Args:
+            usuario (str): Nombre de usuario ingresado
+            contrasena_plana (str): Contraseña sin hashear ingresada
+        Returns:
+            tuple: (bool, str) - True/False si el login es exitoso y un mensaje.
+        """
+        if not self.conectar():
+            return False, "Error de conexión a la base de datos."
+        try:
+            # 1. Buscamos el hash de la contraseña para el usuario
+            sql = "SELECT contrasena_encriptada FROM administrador WHERE usuario = %s;"
+            self.cursor.execute(sql, (usuario,))
+            resultado = self.cursor.fetchone()
+            self.cerrar()
+
+            #Si "resultado" no contiene nada
+            if resultado is None:
+                #No se encontro el usuario
+                return False, "Nombre de usuario o contraseña incorrectos."
+            
+            #El resultado [0]  contiene el hash de la contraseña guardado en la DB
+            hash_guardado = resultado[0].encode('utf-8')
+
+            #2.Verificamos la contraseña
+            contrasena_bytes = contrasena_plana.encode('utf-8')
+
+            # bcrypt.checkpw compara la contraseña plana con el hash guardado
+            if bcrypt.checkpw(contrasena_bytes, hash_guardado):
+                return True, "Inicio de sesión exitoso."
+            else:
+                return False, "Nombre de usuario o contraseña incorrectos."
+        
+        except psycopg2.Error as e:
+            print(f"Error al verificar credenciales: {e}")
+            self.cerrar()
+            return False, "Error al procesar el inicio de sesión."
+
+
+
+
+
 
     def insertar_administrador(self, datos):
         """
